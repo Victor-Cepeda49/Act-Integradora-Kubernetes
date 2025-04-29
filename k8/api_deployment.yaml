@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: colegio-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: colegio-api
+  template:
+    metadata:
+      labels:
+        app: colegio-api
+    spec:
+      containers:
+      - name: colegio-api
+        image: colegio-api
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DB_HOST
+          value: "mysql-service"
+        - name: DB_USER
+          value: "root"
+        - name: DB_PASSWORD
+          value: ""
+        - name: DB_NAME
+          value: "colegio"
