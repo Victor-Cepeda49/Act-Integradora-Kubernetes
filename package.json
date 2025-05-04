@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.js",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +19,16 @@
     "jest": "^29.7.0",
     "nodemon": "^3.1.10",
     "supertest": "^7.1.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Victor-Cepeda49/Act-Integradora-Kubernetes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Victor-Cepeda49/Act-Integradora-Kubernetes/issues"
+  },
+  "homepage": "https://github.com/Victor-Cepeda49/Act-Integradora-Kubernetes#readme"
 }

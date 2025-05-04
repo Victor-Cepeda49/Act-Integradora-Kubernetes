@@ -1,5 +1,6 @@
 const request = require('supertest');
-const app = require('../src/index');
+const { app, server} = require('../src/index');
+const { closePool } = require('../src/db');
 
 describe('CRUD Alumnos API', () => {
   let createdAlumnoId;
@@ -39,5 +40,10 @@ describe('CRUD Alumnos API', () => {
     const res = await request(app).delete(`/api/alumnos/${createdAlumnoId}`);
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('message', 'Alumno eliminado');
+  });
+  
+  afterAll(async () => {
+    await closePool();       // Cerramos la conexión a la DB
+    server.close();          // Cerramos el servidor Express
   });
 });

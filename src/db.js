@@ -10,4 +10,11 @@ const pool = mysql.createPool({
   queueLimit: 0
 });
 
-module.exports = pool;
+const closePool = async () => {
+  await pool.end();
+};
+
+module.exports = {
+  pool,
+  closePool
+};
