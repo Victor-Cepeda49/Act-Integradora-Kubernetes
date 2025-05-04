@@ -1,0 +1,67 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: colegio
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Esperar a que MySQL esté listo
+        run: sleep 20
+
+      - name: Instalar cliente MySQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+
+      - name: Crear tabla 'alumnos' para pruebas
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -u root -proot colegio -e "
+            CREATE TABLE IF NOT EXISTS alumnos (
+              id INT AUTO_INCREMENT PRIMARY KEY,
+              nombre VARCHAR(100),
+              matricula INT,
+              niv_curso VARCHAR(50)
+            );
+            INSERT INTO alumnos (nombre, matricula, niv_curso)
+            VALUES ('Alumno Prueba', 123456, 'Profesional');
+          "
+
+      - name: Ejecutar pruebas con Jest
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: root
+          DB_PASS: root
+          DB_NAME: colegio
+        run: npm test -- --detectOpenHandles
