@@ -17,7 +17,7 @@ spec:
         image: mysql:8.0
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: 
+          value: root
         - name: MYSQL_DATABASE
           value: colegio
         ports:

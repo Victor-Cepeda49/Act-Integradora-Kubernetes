@@ -1,0 +1,7 @@
+apiVersion: v2
+name: colegio-api
+description: API REST CRUD para alumnos del colegio
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+

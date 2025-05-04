@@ -18,11 +18,13 @@ spec:
         ports:
         - containerPort: 3000
         env:
-        - name: DB_HOST
-          value: "mysql-service"
-        - name: DB_USER
-          value: "root"
-        - name: DB_PASSWORD
-          value: ""
-        - name: DB_NAME
-          value: "colegio"
+        - name: MYSQL_HOST
+          value: "mysql"
+        - name: MYSQL_PORT
+          value: "3306"
+        - name: MYSQL_USER
+          value: root
+        - name: MYSQL_PASSWORD
+          value: root
+        - name: MYSQL_DATABASE
+          value: colegio
